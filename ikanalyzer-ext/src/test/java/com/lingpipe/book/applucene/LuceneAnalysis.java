@@ -9,7 +9,6 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
-import org.apache.lucene.util.Version;
 
 public class LuceneAnalysis {
 
@@ -20,8 +19,7 @@ public class LuceneAnalysis {
         String text = args[1];
         
         /*x LuceneAnalysis.1 */
-        StandardAnalyzer analyzer 
-            = new StandardAnalyzer(Version.LUCENE_36);
+        StandardAnalyzer analyzer  = new StandardAnalyzer();
         /*x*/
         
         /*x LuceneAnalysis.2 */

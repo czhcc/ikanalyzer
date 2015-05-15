@@ -4,11 +4,10 @@
 package com.ky;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Index;
@@ -18,7 +17,6 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 /**
@@ -47,11 +45,12 @@ public class LuceneIndexingBoost
 		File indexDir = new File("D:/temp/index_ky/");
 		indexDir.delete();
         
-        Directory fsDir = FSDirectory.open(indexDir);
+		Path path = Paths.get("D:/temp/index_ky/");
+        Directory fsDir = FSDirectory.open(path);
 
         Analyzer stdAn = new IKAnalyzer(true);
 
-        IndexWriterConfig iwConf = new IndexWriterConfig(Version.LUCENE_40,stdAn);
+        IndexWriterConfig iwConf = new IndexWriterConfig(stdAn);
         iwConf.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 
         IndexWriter indexWriter = new IndexWriter(fsDir,iwConf);

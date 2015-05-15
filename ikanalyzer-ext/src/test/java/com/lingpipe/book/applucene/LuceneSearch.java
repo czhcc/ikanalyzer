@@ -3,9 +3,10 @@ package com.lingpipe.book.applucene;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.DirectoryReader;
@@ -20,7 +21,6 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 public class LuceneSearch {
@@ -41,15 +41,16 @@ public class LuceneSearch {
         System.out.println("Hits (rank,score,file name)");
         
     /*x LuceneSearch.2 */
-        Directory fsDir = FSDirectory.open(indexDir);
-        IndexReader reader = DirectoryReader.open(FSDirectory.open(indexDir));
+        Path path = Paths.get("D:/temp/index_test4/");
+        Directory fsDir = FSDirectory.open(path);
+        IndexReader reader = DirectoryReader.open(FSDirectory.open(path));
         IndexSearcher searcher = new IndexSearcher(reader);
 
         String dField = "text";
         Analyzer stdAn 
             = new IKAnalyzer(true);
         QueryParser parser 
-            = new QueryParser(Version.LUCENE_40,dField,stdAn);
+            = new QueryParser(dField,stdAn);
         
         Term term = new Term(dField,query);
         System.out.println(reader.docFreq(term));

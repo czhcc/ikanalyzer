@@ -2,6 +2,8 @@ package com.lingpipe.book.applucene;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.miscellaneous.LimitTokenCountAnalyzer;
@@ -12,7 +14,6 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 
 public class LuceneDelete {
 
@@ -25,16 +26,17 @@ public class LuceneDelete {
         String fieldName = "file";
         String token = "abc.sql";
 
-        Directory fsDir = FSDirectory.open(indexDir);
+        Path path = Paths.get("D:/temp/index_test2/");
+        Directory fsDir = FSDirectory.open(path);
 
         Analyzer stdAn 
-            = new StandardAnalyzer(Version.LUCENE_36);
+            = new StandardAnalyzer();
         Analyzer ltcAn 
             = new LimitTokenCountAnalyzer(stdAn,Integer.MAX_VALUE);
 
         /*x LuceneDelete.1 */
         IndexWriterConfig iwConf 
-            = new IndexWriterConfig(Version.LUCENE_36,ltcAn);
+            = new IndexWriterConfig(ltcAn);
         iwConf.setOpenMode(IndexWriterConfig.OpenMode.APPEND);
 
         IndexWriter indexWriter

@@ -4,7 +4,8 @@
 package com.ky;
 
 import java.io.File;
-import java.io.StringReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -18,7 +19,6 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.wltea.analyzer.core.Lexeme;
 
 /**
  * <p>
@@ -49,8 +49,9 @@ public class LuceneSearchXm
         System.out.println("Hits (rank,score,file name)");
         
     /*x LuceneSearch.2 */
-        Directory fsDir = FSDirectory.open(indexDir);
-        IndexReader reader = DirectoryReader.open(FSDirectory.open(indexDir));
+        Path path = Paths.get("D:/temp/index_ky/");
+        Directory fsDir = FSDirectory.open(path);
+        IndexReader reader = DirectoryReader.open(FSDirectory.open(path));
         IndexSearcher searcher = new IndexSearcher(reader);
         
         String fiels[] = {"xm","content"};  

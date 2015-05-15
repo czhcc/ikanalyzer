@@ -3,10 +3,11 @@
  */
 package com.ky.lucene;
 
-import java.io.Reader;
+import java.util.Map;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.util.TokenizerFactory;
+import org.apache.lucene.util.AttributeFactory;
 import org.wltea.analyzer.lucene.IKTokenizer;
 
 /**
@@ -21,19 +22,28 @@ import org.wltea.analyzer.lucene.IKTokenizer;
  */
 public class IKTokenizerFactory extends TokenizerFactory
 {
+	private final static String KEY = "smart";
+	
+	private boolean useSmart = false;
 
-	/* (non-Javadoc)
-	 * @see org.apache.lucene.analysis.util.TokenizerFactory#create(java.io.Reader)
+	/**
+	 * @param args
 	 */
-	@Override
-	public Tokenizer create(Reader input)
-	{
-		String smart = this.getArgs().get("smart");
-		boolean useSmart = false;
+	public IKTokenizerFactory(Map<String, String> args) {
+		super(args);
+		String smart = args.get(KEY);
 		if("true".equals(smart)){
 			useSmart = true;
 		}
-		Tokenizer _IKTokenizer = new IKTokenizer(input , useSmart);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.apache.lucene.analysis.util.TokenizerFactory#create(org.apache.lucene.util.AttributeFactory)
+	 */
+	@Override
+	public Tokenizer create(AttributeFactory factory)
+	{
+		Tokenizer _IKTokenizer = new IKTokenizer(useSmart);
 		
 		return _IKTokenizer;
 	}

@@ -4,9 +4,10 @@
 package com.ky;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -22,7 +23,6 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 /**
@@ -41,15 +41,15 @@ public class LuceneSearch
 	{
 		String[] fields = new String[]{"subject","content"};
 		String[] contents = new String[]{"张三","张三"};
-		Query parse = MultiFieldQueryParser.parse(Version.LUCENE_40, fields, contents, new IKAnalyzer(true));
+		Query parse = MultiFieldQueryParser.parse(fields, contents, new IKAnalyzer(true));
 		return parse;
 	}
 	
 	public static Query getQuery3() throws Exception
 	{
 		BooleanQuery bquery = new BooleanQuery();
-        QueryParser titlequery = new QueryParser(Version.LUCENE_40,"subject", new IKAnalyzer(true));
-        QueryParser contentquery = new QueryParser(Version.LUCENE_40,"content", new IKAnalyzer(true));
+        QueryParser titlequery = new QueryParser("subject", new IKAnalyzer(true));
+        QueryParser contentquery = new QueryParser("content", new IKAnalyzer(true));
 
         bquery.add(titlequery.parse("张三"), BooleanClause.Occur.SHOULD);
         bquery.add(contentquery.parse("张三"), BooleanClause.Occur.SHOULD);
@@ -60,8 +60,8 @@ public class LuceneSearch
 	public static Query getQuery4() throws Exception
 	{
 		BooleanQuery bquery = new BooleanQuery();
-        QueryParser titlequery = new QueryParser(Version.LUCENE_40,"xm", new IKAnalyzer(true));
-        QueryParser contentquery = new QueryParser(Version.LUCENE_40,"content", new IKAnalyzer(true));
+        QueryParser titlequery = new QueryParser("xm", new IKAnalyzer(true));
+        QueryParser contentquery = new QueryParser("content", new IKAnalyzer(true));
 
         bquery.add(titlequery.parse("张三"), BooleanClause.Occur.SHOULD);
         bquery.add(contentquery.parse("张三"), BooleanClause.Occur.SHOULD);
@@ -85,13 +85,14 @@ public class LuceneSearch
         System.out.println("Hits (rank,score,file name)");
         
     /*x LuceneSearch.2 */
-        Directory fsDir = FSDirectory.open(indexDir);
-        IndexReader reader = DirectoryReader.open(FSDirectory.open(indexDir));
+        Path path = Paths.get("D:/temp/index_ky/");
+        Directory fsDir = FSDirectory.open(path);
+        IndexReader reader = DirectoryReader.open(FSDirectory.open(path));
         IndexSearcher searcher = new IndexSearcher(reader);
 
         String dField = "content";
         Analyzer stdAn = new IKAnalyzer(true);
-        QueryParser parser = new QueryParser(Version.LUCENE_40,dField,stdAn);
+        QueryParser parser = new QueryParser(dField,stdAn);
         
         Term term = new Term(dField,query);
         System.out.println("===>" + reader.docFreq(term));

@@ -9,6 +9,7 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.FieldType;
+import org.apache.lucene.index.IndexOptions;
 
 /**
  * <p>
@@ -30,13 +31,13 @@ public class VecTextField extends Field
 	public static final FieldType TYPE_STORED = new FieldType();
 
 	static {
-		TYPE_NOT_STORED.setIndexed(true);
+		TYPE_NOT_STORED.setIndexOptions(IndexOptions.DOCS);
 		TYPE_NOT_STORED.setTokenized(true);
 		TYPE_NOT_STORED.setStoreTermVectors(true);
 		TYPE_NOT_STORED.setStoreTermVectorPositions(true);
 		TYPE_NOT_STORED.freeze();
 
-		TYPE_STORED.setIndexed(true);
+		TYPE_STORED.setIndexOptions(IndexOptions.DOCS);
 		TYPE_STORED.setTokenized(true);
 		TYPE_STORED.setStored(true);
 		TYPE_STORED.setStoreTermVectors(true);

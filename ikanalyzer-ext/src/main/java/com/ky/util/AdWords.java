@@ -5,6 +5,8 @@ package com.ky.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -89,13 +91,13 @@ public class AdWords
 	{
 		IndexReader result = null;
 		if(paths.length == 1){
-			File indexDir = new File(paths[0]);
-			result = DirectoryReader.open(FSDirectory.open(indexDir));
+			Path path = Paths.get(paths[0]);
+			result = DirectoryReader.open(FSDirectory.open(path));
 		} else {
 			IndexReader[] readers = new IndexReader[paths.length];
 			for(int i=0;i<paths.length;i++){
-				File indexDir = new File(paths[i]);
-				readers[i] = DirectoryReader.open(FSDirectory.open(indexDir));
+				Path path = Paths.get(paths[i]);
+				readers[i] = DirectoryReader.open(FSDirectory.open(path));
 			}
 			result = new MultiReader(readers);
 		}

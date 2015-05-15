@@ -3,6 +3,8 @@
  */
 package com.ky.lucene;
 
+import java.util.Map;
+
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.util.TokenFilterFactory;
 
@@ -18,6 +20,13 @@ import org.apache.lucene.analysis.util.TokenFilterFactory;
  */
 public class EmailTokenFilterFactory extends TokenFilterFactory
 {
+
+	/**
+	 * @param args
+	 */
+	protected EmailTokenFilterFactory(Map<String, String> args) {
+		super(args);
+	}
 
 	/* (non-Javadoc)
 	 * @see org.apache.lucene.analysis.util.TokenFilterFactory#create(org.apache.lucene.analysis.TokenStream)

@@ -4,6 +4,8 @@
 package com.lingpipe.book.applucene;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,7 +39,8 @@ public class LuceneFq
 	public static void main(String[] args) throws Exception
 	{
 		File indexDir = new File("D:/temp/index_test4/");
-		IndexReader reader = DirectoryReader.open(FSDirectory.open(indexDir));
+		Path path = Paths.get("D:/temp/index_test4/");
+		IndexReader reader = DirectoryReader.open(FSDirectory.open(path));
 	    IndexSearcher searcher = new IndexSearcher(reader);
 	    IndexReader indexReader = searcher.getIndexReader();
 	    for (int docNum = 0; docNum<reader.numDocs(); docNum++) {

@@ -3,10 +3,10 @@ package com.lingpipe.book.applucene;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.miscellaneous.LimitTokenCountAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.StringField;
@@ -16,7 +16,6 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.LockObtainFailedException;
-import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.ky.ext.VecTextField;
@@ -31,7 +30,8 @@ public class LuceneIndexing {
         File docDir = new File("D:/works/index_file3");
         File indexDir = new File("D:/temp/index_test4/");
         
-        Directory fsDir = FSDirectory.open(indexDir);
+        Path path = Paths.get("D:/temp/index_test4/");
+        Directory fsDir = FSDirectory.open(path);
 
         Analyzer stdAn 
             = new IKAnalyzer(true);
@@ -39,7 +39,7 @@ public class LuceneIndexing {
             = new LimitTokenCountAnalyzer(stdAn,Integer.MAX_VALUE);*/
 
         IndexWriterConfig iwConf 
-            = new IndexWriterConfig(Version.LUCENE_40,stdAn);
+            = new IndexWriterConfig(stdAn);
         iwConf.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 
         IndexWriter indexWriter
