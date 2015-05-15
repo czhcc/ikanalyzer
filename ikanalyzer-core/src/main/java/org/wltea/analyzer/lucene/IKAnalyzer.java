@@ -37,6 +37,8 @@ public final class IKAnalyzer extends Analyzer{
 	
 	private boolean useSmart;
 	
+	private Reader reader;
+	
 	public boolean useSmart() {
 		return useSmart;
 	}
@@ -68,9 +70,19 @@ public final class IKAnalyzer extends Analyzer{
 	 * 重载Analyzer接口，构造分词组件
 	 */
 	@Override
-	protected TokenStreamComponents createComponents(String fieldName, final Reader in) {
-		Tokenizer _IKTokenizer = new IKTokenizer(in , this.useSmart());
+	protected TokenStreamComponents createComponents(String fieldName) {
+		Tokenizer _IKTokenizer = new IKTokenizer(this.useSmart());
 		return new TokenStreamComponents(_IKTokenizer);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.apache.lucene.analysis.Analyzer#initReader(java.lang.String, java.io.Reader)
+	 */
+	@Override
+	protected Reader initReader(String fieldName, Reader reader)
+	{
+		this.reader = reader;
+		return super.initReader(fieldName, reader);
 	}
 
 }

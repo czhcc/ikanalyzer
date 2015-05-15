@@ -3,16 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wltea</groupId>
 	<artifactId>ikanalyzer-parent</artifactId>
-	<version>4.4.6.RELEASE</version>
+	<version>5.1.0.RELEASE</version>
 	<packaging>pom</packaging>
 
-	<description>支持Lucene4和Solr4</description>
+	<description>支持Lucene5和Solr5</description>
 	<name>ikanalyzer-parent</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdkLevel>1.6</jdkLevel>
-		<luceneVersion>4.1.0</luceneVersion>
+		<luceneVersion>5.1.0</luceneVersion>
 		<jvmargs>-XX:MaxPermSize=384m -Xms512m -Xmx1024m</jvmargs>
 	</properties>
 
@@ -156,12 +156,12 @@
 		<repository>
 			<id>nexus-releases</id>
 			<name>ReleasesProxy</name>
-			<url>http://kycrm.gnway.net:8081/nexus/content/repositories/releases/</url>
+			<url>http://svn.coruninfo.com:8081/nexus/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
 			<name>SnapshotsProxy</name>
-			<url>http://kycrm.gnway.net:8081/nexus/content/repositories/snapshots/</url>
+			<url>http://svn.coruninfo.com:8081/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>

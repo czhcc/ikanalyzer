@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>ikanalyzer-parent</artifactId>
 		<groupId>org.wltea</groupId>
-		<version>4.4.6.RELEASE</version>
+		<version>5.1.0.RELEASE</version>
 		<relativePath>../ikanalyzer-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>ikanalyzer-core</artifactId>

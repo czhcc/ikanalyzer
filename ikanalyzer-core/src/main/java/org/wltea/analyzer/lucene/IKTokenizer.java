@@ -33,13 +33,12 @@ import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
-
 import org.wltea.analyzer.core.IKSegmenter;
 import org.wltea.analyzer.core.Lexeme;
 
 /**
  * IK分词器 Lucene Tokenizer适配器类
- * 兼容Lucene 4.0版本
+ * 兼容Lucene 5.0版本
  */
 public final class IKTokenizer extends Tokenizer {
 	
@@ -55,24 +54,37 @@ public final class IKTokenizer extends Tokenizer {
 	//记录最后一个词元的结束位置
 	private int endPosition;
 	
+	private boolean useSmart;
+	
 	/**
 	 * Lucene 4.0 Tokenizer适配器类构造函数
 	 * @param in
 	 * @param useSmart
 	 */
-	public IKTokenizer(Reader in , boolean useSmart){
-	    super(in);
+	public IKTokenizer(Reader input, boolean useSmart){
 	    offsetAtt = addAttribute(OffsetAttribute.class);
 	    termAtt = addAttribute(CharTermAttribute.class);
 	    typeAtt = addAttribute(TypeAttribute.class);
+	    super.input = input;
 		_IKImplement = new IKSegmenter(input , useSmart);
 	}
-
+	
+	public IKTokenizer(boolean useSmart){
+		offsetAtt = addAttribute(OffsetAttribute.class);
+	    termAtt = addAttribute(CharTermAttribute.class);
+	    typeAtt = addAttribute(TypeAttribute.class);
+	    this.useSmart = useSmart;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.apache.lucene.analysis.TokenStream#incrementToken()
 	 */
 	@Override
 	public boolean incrementToken() throws IOException {
+		if(_IKImplement == null){
+			super.reset();
+			_IKImplement = new IKSegmenter(input, useSmart);
+		}
 		//清除所有的词元属性
 		clearAttributes();
 		Lexeme nextLexeme = _IKImplement.next();
