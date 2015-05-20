@@ -12,7 +12,17 @@ import org.wltea.analyzer.lucene.IKTokenizer;
 
 /**
  * <p>
- * <b>IKTokenizerFactory</b> 是
+ * <b>IKTokenizerFactory</b> 是在Solr下进行配置
+ * <field name="content" type="text_ik" indexed="true" stored="false" multiValued="false" />
+ * 
+ * <fieldType name="text_ik" class="solr.TextField" >
+        <analyzer type="index">
+            <tokenizer class="com.ky.lucene.IKTokenizerFactory" smart="true"/>
+        </analyzer> 
+        <analyzer type="query">
+            <tokenizer class="com.ky.lucene.IKTokenizerFactory" smart="true"/>
+        </analyzer> 
+    </fieldType>
  * </p>
  *
  * @since 2013-2-4
