@@ -65,6 +65,12 @@ public final class IKSegmenter {
 		this.init();
 	}
 	
+	public IKSegmenter(boolean useSmart){
+		this.cfg = DefaultConfig.getInstance();
+		this.cfg.setUseSmart(useSmart);
+		this.init();
+	}
+	
 	/**
 	 * IK分词器构造函数
 	 * @param input

@@ -38,7 +38,6 @@ public class AnalyzerTest
 		System.out.println(parse.toString());
 	}
 	
-	@Ignore
 	@Test
 	public void test2() throws Exception
 	{
@@ -48,6 +47,7 @@ public class AnalyzerTest
 		AnalyzerUtils.displayTokens(ikAnalyzer, s1);
 	}
 	
+	@Ignore
 	@Test
 	public void test3() throws Exception
 	{

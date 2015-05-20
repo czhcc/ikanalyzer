@@ -37,7 +37,9 @@ public class IKTokenizerFactory extends TokenizerFactory
 		}
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * org.apache.solr.analysis.TokenizerChain
+	 * 
 	 * @see org.apache.lucene.analysis.util.TokenizerFactory#create(org.apache.lucene.util.AttributeFactory)
 	 */
 	@Override

@@ -65,7 +65,6 @@ public final class IKTokenizer extends Tokenizer {
 	    offsetAtt = addAttribute(OffsetAttribute.class);
 	    termAtt = addAttribute(CharTermAttribute.class);
 	    typeAtt = addAttribute(TypeAttribute.class);
-	    super.input = input;
 		_IKImplement = new IKSegmenter(input , useSmart);
 	}
 	
@@ -74,6 +73,7 @@ public final class IKTokenizer extends Tokenizer {
 	    termAtt = addAttribute(CharTermAttribute.class);
 	    typeAtt = addAttribute(TypeAttribute.class);
 	    this.useSmart = useSmart;
+	    _IKImplement = new IKSegmenter(useSmart);
 	}
 	
 	/* (non-Javadoc)
@@ -81,10 +81,6 @@ public final class IKTokenizer extends Tokenizer {
 	 */
 	@Override
 	public boolean incrementToken() throws IOException {
-		if(_IKImplement == null){
-			super.reset();
-			_IKImplement = new IKSegmenter(input, useSmart);
-		}
 		//清除所有的词元属性
 		clearAttributes();
 		Lexeme nextLexeme = _IKImplement.next();

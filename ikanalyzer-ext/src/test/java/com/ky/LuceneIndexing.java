@@ -16,6 +16,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Index;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.Field.TermVector;
+import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
@@ -77,6 +78,7 @@ public class LuceneIndexing
         	String content = record[0] + "," + record[1] + "," + record[2];
         	System.out.println("content=" + content);
         	String subject = record[0] + "," + record[1];
+        	FieldType ft = new FieldType();
         	d.add(new Field("xm", record[0], Store.NO, Index.ANALYZED, TermVector.NO));
         	d.add(new Field("gj", record[1], Store.NO, Index.ANALYZED, TermVector.NO));
         	d.add(new Field("subject", subject, Store.NO, Index.ANALYZED, TermVector.NO));
