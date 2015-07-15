@@ -10,9 +10,7 @@ import java.nio.file.Paths;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.Field.Index;
-import org.apache.lucene.document.Field.Store;
-import org.apache.lucene.document.Field.TermVector;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
@@ -61,16 +59,16 @@ public class LuceneIndexingBoost
         	String content = record[0] + "," + record[1] + "," + record[2];
         	System.out.println("content=" + content);
         	String subject = record[0] + "," + record[1];
-        	d.add(new Field("xm", record[0], Store.NO, Index.ANALYZED, TermVector.NO));
-        	d.add(new Field("gj", record[1], Store.NO, Index.ANALYZED, TermVector.NO));
-        	d.add(new Field("subject", subject, Store.NO, Index.ANALYZED, TermVector.NO));
-        	Field f = new Field("content", content, Store.NO, Index.ANALYZED, TermVector.NO);
+        	d.add(new TextField("xm", record[0], Field.Store.NO));
+        	d.add(new TextField("gj", record[1], Field.Store.NO));
+        	d.add(new TextField("subject", subject, Field.Store.NO));
+        	Field f = new TextField("content", content, Field.Store.NO);
         	if("张三".equals(record[0]))
         	{
         		f.setBoost(2f);
         	}
         	d.add(f);
-        	d.add(new Field("content_display", content, Store.YES, Index.NO, TermVector.NO));
+        	d.add(new TextField("content_display", content, Field.Store.YES));
         	indexWriter.addDocument(d);
         }
         

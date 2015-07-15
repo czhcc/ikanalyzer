@@ -24,7 +24,6 @@
  */
 package org.wltea.analyzer.lucene;
 
-import java.io.IOException;
 import java.io.Reader;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -37,8 +36,6 @@ import org.apache.lucene.analysis.Tokenizer;
 public final class IKAnalyzer extends Analyzer{
 	
 	private boolean useSmart;
-	
-	private Reader reader;
 	
 	public boolean useSmart() {
 		return useSmart;
@@ -82,7 +79,6 @@ public final class IKAnalyzer extends Analyzer{
 	@Override
 	protected Reader initReader(String fieldName, Reader reader)
 	{
-		this.reader = reader;
 		return super.initReader(fieldName, reader);
 	}
 
