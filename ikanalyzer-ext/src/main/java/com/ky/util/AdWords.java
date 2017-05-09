@@ -57,7 +57,7 @@ public class AdWords
             Fields termVectors = indexReader.getTermVectors(docNum);
             Terms terms = termVectors.terms(field);
             
-            TermsEnum termsEnum = terms.iterator(null);
+            TermsEnum termsEnum = terms.iterator();
             List<ArWord> arWords = new ArrayList<ArWord>();
             while ((termsEnum.next()) != null) {
             	BytesRef term = termsEnum.term();

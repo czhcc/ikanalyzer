@@ -47,24 +47,25 @@ public class LuceneSearch
 	
 	public static Query getQuery3() throws Exception
 	{
-		BooleanQuery bquery = new BooleanQuery();
+		
         QueryParser titlequery = new QueryParser("subject", new IKAnalyzer(true));
         QueryParser contentquery = new QueryParser("content", new IKAnalyzer(true));
 
-        bquery.add(titlequery.parse("张三"), BooleanClause.Occur.SHOULD);
-        bquery.add(contentquery.parse("张三"), BooleanClause.Occur.SHOULD);
+        BooleanQuery bquery = new BooleanQuery.Builder()
+        		.add(titlequery.parse("张三"), BooleanClause.Occur.SHOULD)
+        		.add(contentquery.parse("张三"), BooleanClause.Occur.SHOULD).build();
         
         return bquery;
 	}
 	
 	public static Query getQuery4() throws Exception
 	{
-		BooleanQuery bquery = new BooleanQuery();
         QueryParser titlequery = new QueryParser("xm", new IKAnalyzer(true));
         QueryParser contentquery = new QueryParser("content", new IKAnalyzer(true));
 
-        bquery.add(titlequery.parse("张三"), BooleanClause.Occur.SHOULD);
-        bquery.add(contentquery.parse("张三"), BooleanClause.Occur.SHOULD);
+        BooleanQuery bquery = new BooleanQuery.Builder()
+        		.add(titlequery.parse("张三"), BooleanClause.Occur.SHOULD)
+        		.add(contentquery.parse("张三"), BooleanClause.Occur.SHOULD).build();
         
         return bquery;
 	}
@@ -74,7 +75,7 @@ public class LuceneSearch
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		File indexDir = new File("D:/temp/index_ky/");
+		File indexDir = new File("D:/works/index_ky/");
         String query = "张三";//"abc@163.com";
         int maxHits = Integer.parseInt("8");
     /*x*/        
@@ -85,7 +86,7 @@ public class LuceneSearch
         System.out.println("Hits (rank,score,file name)");
         
     /*x LuceneSearch.2 */
-        Path path = Paths.get("D:/temp/index_ky/");
+        Path path = Paths.get("D:/works/index_ky/");
         Directory fsDir = FSDirectory.open(path);
         IndexReader reader = DirectoryReader.open(FSDirectory.open(path));
         IndexSearcher searcher = new IndexSearcher(reader);

@@ -59,7 +59,7 @@ public class LuceneFq
             	String term = next.utf8ToString();
             	System.out.println(term + "/" + iterator.docFreq());
             }*/
-            TermsEnum termsEnum = terms.iterator(null);
+            TermsEnum termsEnum = terms.iterator();
             List<ArWord> arWords = new ArrayList<ArWord>();
             while ((termsEnum.next()) != null) {
             	String s = termsEnum.term().utf8ToString();

@@ -13,10 +13,13 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.BooleanQuery.Builder;
+import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -38,7 +41,7 @@ public class LuceneSearchXm
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		File indexDir = new File("D:/temp/index_ky/");
+		File indexDir = new File("D:/works/index_ky/");
         String query = "张三";//"abc@163.com";
         int maxHits = Integer.parseInt("8");
     /*x*/        
@@ -49,26 +52,31 @@ public class LuceneSearchXm
         System.out.println("Hits (rank,score,file name)");
         
     /*x LuceneSearch.2 */
-        Path path = Paths.get("D:/temp/index_ky/");
+        Path path = Paths.get("D:/works/index_ky/");
         Directory fsDir = FSDirectory.open(path);
         IndexReader reader = DirectoryReader.open(FSDirectory.open(path));
         IndexSearcher searcher = new IndexSearcher(reader);
         
         String fiels[] = {"xm","content"};  
 
-		BooleanQuery bq = new BooleanQuery();
+		BooleanQuery bq = new BooleanQuery.Builder().build();
+		Builder builder = new BooleanQuery.Builder();
 		for (int i = 0; i < fiels.length; i++) {
 
 			TermQuery tq = new TermQuery(new Term(fiels[i], query));
 
+			BoostQuery boostQuery = null;
 			if (fiels[i].equals("xm")) { // 在Name这一个Field需要给大的比重
-				tq.setBoost(100.0f);
+				boostQuery = new BoostQuery(tq, 100.0f);
 			} else {
-				tq.setBoost(0.0f); // 其他的不需要考滤
+				boostQuery = new BoostQuery(tq, 0.0f);// 其他的不需要考滤
 			}
-
-			bq.add(tq, BooleanClause.Occur.SHOULD); // 关键字之间是 "或" 的关系
+			
+			builder.add(new BooleanClause(boostQuery, Occur.SHOULD));// 关键字之间是 "或" 的关系
+			
+//			bq.clauses().add(new BooleanClause(boostQuery, Occur.SHOULD)); // 关键字之间是 "或" 的关系
 		}
+		bq = builder.build();
 		System.out.println("搜索条件Query:" + bq.toString());
 		
 		TopDocs hits = searcher.search(bq,maxHits);

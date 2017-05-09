@@ -7,10 +7,10 @@ import java.io.IOException;
 
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.SortField;
-import org.apache.lucene.uninverting.UninvertingReader.Type;
 import org.apache.solr.response.TextResponseWriter;
 import org.apache.solr.schema.FieldType;
 import org.apache.solr.schema.SchemaField;
+import org.apache.solr.uninverting.UninvertingReader;
 
 /**
  * <p>
@@ -49,7 +49,7 @@ public class VecTextFieldType extends FieldType
 	 * @see org.apache.solr.schema.FieldType#getUninversionType(org.apache.solr.schema.SchemaField)
 	 */
 	@Override
-	public Type getUninversionType(SchemaField field)
+	public UninvertingReader.Type getUninversionType(SchemaField field)
 	{
 		return null;
 	}

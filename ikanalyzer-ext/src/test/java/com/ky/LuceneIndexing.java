@@ -47,10 +47,10 @@ public class LuceneIndexing
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		File indexDir = new File("D:/temp/index_ky/");
+		File indexDir = new File("D:/works/index_ky/");
 		indexDir.delete();
         
-		Path path = Paths.get("D:/temp/index_ky/");
+		Path path = Paths.get("D:/works/index_ky/");
         Directory fsDir = FSDirectory.open(path);
 
         Analyzer stdAn 

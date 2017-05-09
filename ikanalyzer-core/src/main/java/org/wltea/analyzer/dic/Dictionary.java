@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wltea.analyzer.cfg.Configuration;
+import org.wltea.analyzer.cfg.DefaultConfig;
 
 /**
  * 词典管理类,单子模式
@@ -357,6 +358,99 @@ public class Dictionary {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	//------------ solr --------------
+	/**
+	 * 手动添加词库
+	 * 用于solr的/ikupdate?add=newword请求
+	 * Last Modified: 2015-07-31
+	 * @param wordList
+	 */
+	public void updateDict(String[] wordArr) {
+		//使用solr从tomcat启动时，新增的词典在原有词典之前加载时，强制进行加载词典
+		if(singleton == null) {
+			Configuration cfg = DefaultConfig.getInstance();
+			Dictionary.initial(cfg);
+		}
+		for(String theWord:wordArr) {
+			if(theWord != null && !"".equals(theWord.trim())) {
+				_MainDict.fillSegment(theWord.trim().toLowerCase().toCharArray());
+			}
+		}
+	}
+	
+	public void updateDictList(List<String> wordArr) {
+		//使用solr从tomcat启动时，新增的词典在原有词典之前加载时，强制进行加载词典
+		if(singleton == null) {
+			Configuration cfg = DefaultConfig.getInstance();
+			Dictionary.initial(cfg);
+		}
+		for(String theWord:wordArr) {
+			if(theWord != null && !"".equals(theWord.trim())) {
+				_MainDict.fillSegment(theWord.trim().toLowerCase().toCharArray());
+			}
+		}
+	}
+	
+	/**
+	 * 更新词典
+	 * 用于solr的/fupdate?dict=newdict.txt请求，用于添加词典文件
+	 * Last Modified: 2015-07-31
+	 * @param is
+	 */
+	private static void updateDict(InputStream is){
+		if(is == null){
+        	return;
+        }
+        
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(is , "UTF-8"), 512);
+			String theWord = null;
+			do {
+				theWord = br.readLine();
+				if (theWord != null && !"".equals(theWord.trim())) {
+					singleton._MainDict.fillSegment(theWord.trim().toLowerCase().toCharArray());
+				}
+			} while (theWord != null);
+			
+		} catch (IOException ioe) {
+			System.err.println("Main Dictionary loading exception.");
+			ioe.printStackTrace();
+			
+		}finally{
+			try {
+				if(is != null){
+                    is.close();
+                    is = null;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * 更新词典
+	 * 用于solr定期更新时，从配置文件中读取新增词典列表，和更新词典
+	 * @param inputStreamList
+	 */
+	public static void updateDict(List<InputStream> inputStreamList) {
+		//使用solr从tomcat启动时，新增的文件会在原有词典之前加载，强制进行加载词典
+		if(singleton == null) {
+			Configuration cfg = DefaultConfig.getInstance();
+			Dictionary.initial(cfg);
+		}
+		for(InputStream is : inputStreamList) {
+			singleton.updateDict(is);
+		}
+	}
+	
+	/**
+	 * 主词典重载
+	 */
+	public void reloadDict() {
+		this._MainDict = null;
+		loadMainDict();
 	}
 	
 }

@@ -16,13 +16,13 @@ class FragmentsLucene {
     void frag1() {
         
         /*x FragmentsLucene.1 */
-        BooleanQuery bq1 = new BooleanQuery();
-        bq1.add(new TermQuery(new Term("text","biology")), Occur.MUST);
-        bq1.add(new TermQuery(new Term("text","cell")), Occur.SHOULD);
+        BooleanQuery bq1 = new BooleanQuery.Builder()
+        		.add(new TermQuery(new Term("text","biology")), Occur.MUST)
+        		.add(new TermQuery(new Term("text","cell")), Occur.SHOULD).build();
         
-        BooleanQuery bq2 = new BooleanQuery();
-        bq2.add(new TermQuery(new Term("text","micro")), Occur.SHOULD);
-        bq2.add(bq1,Occur.MUST);
+        BooleanQuery bq2 = new BooleanQuery.Builder()
+        		.add(new TermQuery(new Term("text","micro")), Occur.SHOULD)
+        		.add(bq1,Occur.MUST).build();
         /*x*/
     }
     

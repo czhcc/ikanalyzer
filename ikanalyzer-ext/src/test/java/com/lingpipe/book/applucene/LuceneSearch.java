@@ -30,8 +30,8 @@ public class LuceneSearch {
         throws ParseException, CorruptIndexException,
                IOException {
 
-        File indexDir = new File("D:/temp/index_test4/");
-        String query = "张三";//"abc@163.com";
+        File indexDir = new File("D:/Program Data/Projects/tmp/");
+        String query = "互聯網";//"abc@163.com";
         int maxHits = Integer.parseInt("3");
     /*x*/        
 
@@ -41,14 +41,14 @@ public class LuceneSearch {
         System.out.println("Hits (rank,score,file name)");
         
     /*x LuceneSearch.2 */
-        Path path = Paths.get("D:/temp/index_test4/");
+        Path path = Paths.get("D:/Program Data/Projects/tmp/");
         Directory fsDir = FSDirectory.open(path);
-        IndexReader reader = DirectoryReader.open(FSDirectory.open(path));
+        IndexReader reader = DirectoryReader.open(fsDir);
         IndexSearcher searcher = new IndexSearcher(reader);
 
         String dField = "text";
         Analyzer stdAn 
-            = new IKAnalyzer(true);
+            = new IKAnalyzer();
         QueryParser parser 
             = new QueryParser(dField,stdAn);
         
@@ -62,17 +62,18 @@ public class LuceneSearch {
         
         TopDocs hits = searcher.search(q,maxHits);
         ScoreDoc[] scoreDocs = hits.scoreDocs;
-
+        System.out.println(scoreDocs.length);
         for (int n = 0; n < scoreDocs.length; ++n) {
             ScoreDoc sd = scoreDocs[n];
             float score = sd.score;
             int docId = sd.doc;
             Document d = searcher.doc(docId);
-            String fileName = d.get("file");
-            String area = d.get("area");
+//            String fileName = d.get("file");
+//            String area = d.get("area");
+            System.out.println(d);
     /*x*/
-            System.out.printf("%3d %4.2f  %s, area:%s\n",
-                              n, score, fileName, area);
+//            System.out.printf("%3d %4.2f  %s, area:%s\n",
+//                              n, score, fileName, area);
         }
         reader.close();
     }

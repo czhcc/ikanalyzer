@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>ikanalyzer-parent</artifactId>
 		<groupId>org.wltea</groupId>
-		<version>5.1.0.RELEASE</version>
+		<version>6.1.0.RELEASE</version>
 		<relativePath>../ikanalyzer-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>ikanalyzer-ext</artifactId>
@@ -12,7 +12,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<solrVersion>5.1.0</solrVersion>
+		<solrVersion>6.4.2</solrVersion>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>org.wltea</groupId>
 			<artifactId>ikanalyzer-core</artifactId>
-			<version>5.1.0.RELEASE</version>
+			<version>6.1.0.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -32,11 +32,6 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<dependency>
-    		<groupId>jdk.tools</groupId>
-    		<artifactId>jdk.tools</artifactId>
-    		<version>1.7</version>
-    		<scope>provided</scope>
-		</dependency>
+	
 	</dependencies>
 </project>
