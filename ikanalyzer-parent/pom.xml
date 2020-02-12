@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdkLevel>1.8</jdkLevel>
 		<luceneVersion>6.4.2</luceneVersion>
-		<solrVersion>6.4.2</solrVersion>
+		<solrVersion>8.4.0</solrVersion>
 		<jvmargs>-XX:MaxPermSize=384m -Xms512m -Xmx1024m</jvmargs>
 	</properties>
 
